@@ -222,7 +222,7 @@ async function handleChatCompletion(req, res) {
         };
 
         res.write(`data: ${JSON.stringify(response)}\n\n`);
-        console.log("write2:", new Date().toLocaleString());
+        console.log("write2:", new Date().toLocaleString(),`data: ${JSON.stringify(response)}\n\n`);
       }
 
       fullContent = content.length > fullContent.length ? content : fullContent;
