@@ -190,7 +190,7 @@ async function handleChatCompletion(req, res) {
     let created = Date.now();
 
     for await (const message of StreamCompletion(response.data)) {
-    console.log("parsed:", new Date().toLocaleString());
+    // console.log("parsed:", new Date().toLocaleString());
       const parsed = JSON.parse(message);
 
       let content = parsed?.message?.content?.parts[0] || "";
@@ -203,7 +203,7 @@ async function handleChatCompletion(req, res) {
       }
 
       if (content === "") continue;
-
+      console.log("write1:", new Date().toLocaleString());
       if (req.body.stream) {
         let response = {
           id: requestId,
@@ -222,6 +222,7 @@ async function handleChatCompletion(req, res) {
         };
 
         res.write(`data: ${JSON.stringify(response)}\n\n`);
+        console.log("write2:", new Date().toLocaleString());
       }
 
       fullContent = content.length > fullContent.length ? content : fullContent;
