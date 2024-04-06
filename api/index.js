@@ -166,7 +166,7 @@ async function handleChatCompletion(req, res) {
       conversation_mode: { kind: "primary_assistant" },
       websocket_request_id: randomUUID(),
     };
-    console.log("Upstream_request_start");
+    console.log("Upstream_request_start", new Date().toLocaleString());
     const response = await axiosInstance.post(apiUrl, body, {
       responseType: "stream",
       headers: {
@@ -174,7 +174,7 @@ async function handleChatCompletion(req, res) {
         "openai-sentinel-chat-requirements-token": token,
       },
     });
-    console.log("Upstream_response_code:", response.status, response.statusText);
+    console.log("Upstream_response_code:", response.status, response.statusText, new Date().toLocaleString());
 
     // Set the response headers based on the request type
     if (req.body.stream) {
@@ -190,6 +190,7 @@ async function handleChatCompletion(req, res) {
     let created = Date.now();
 
     for await (const message of StreamCompletion(response.data)) {
+    console.log("parsed:", new Date().toLocaleString());
       const parsed = JSON.parse(message);
 
       let content = parsed?.message?.content?.parts[0] || "";
