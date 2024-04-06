@@ -20,7 +20,7 @@ let flag = true;
 let sessionStartTime = new Date();
 // Function to wait for a specified duration
 // const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
+let startTime = new Date();
 // Function for authentication
 function authMiddleware(req, res, next) {
   // Set API-Key, if not set, next()
@@ -222,6 +222,10 @@ async function handleChatCompletion(req, res) {
         };
 
         res.write(`data: ${JSON.stringify(response)}\n\n`);
+        // 函数运行超过9秒立即结束
+        if ((new Date() - startTime) / 1000 > 9) {
+          res.end();
+        }
         console.log("write2:", new Date().toLocaleString(),`data: ${JSON.stringify(response)}\n\n`);
       }
 
