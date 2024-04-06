@@ -203,7 +203,7 @@ async function handleChatCompletion(req, res) {
       }
 
       if (content === "") continue;
-      console.log("write1:", new Date().toLocaleString());
+      console.log("write1:", (new Date() - startTime) / 1000);
       if (req.body.stream) {
         let response = {
           id: requestId,
@@ -223,10 +223,10 @@ async function handleChatCompletion(req, res) {
 
         res.write(`data: ${JSON.stringify(response)}\n\n`);
         // 函数运行超过9秒立即结束
-        if ((new Date() - startTime) / 1000 > 9) {
+        if ((new Date() - startTime) / 1000 > 8) {
           res.end();
         }
-        console.log("write2:", new Date().toLocaleString(),`data: ${JSON.stringify(response)}\n\n`);
+        console.log("write2:", (new Date() - startTime) / 1000,`data: ${JSON.stringify(response)}\n\n`);
       }
 
       fullContent = content.length > fullContent.length ? content : fullContent;
