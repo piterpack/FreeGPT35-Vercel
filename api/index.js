@@ -20,7 +20,7 @@ let flag = true;
 let sessionStartTime = new Date();
 // Function to wait for a specified duration
 // const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-let startTime = new Date();
+
 // Function for authentication
 function authMiddleware(req, res, next) {
   // Set API-Key, if not set, next()
@@ -137,6 +137,7 @@ function enableCORS(req, res, next) {
 
 // Middleware to handle chat completions
 async function handleChatCompletion(req, res) {
+  let startTime = new Date();
   if ((new Date() - sessionStartTime) / 60000 > 1) {
     flag = true;
   }
